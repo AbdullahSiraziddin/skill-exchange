@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}{{ profile.public_name }}{% endblock %}
+
+{% block content %}
+<div class="card-pastel c2 mb-3" style="height:auto">
+  <div class="d-flex align-items-center gap-4 flex-wrap">
+    {% if profile.avatar %}
+      <img src="{{ profile.avatar.url }}" class="avatar avatar-lg" alt="">
+    {% else %}
+      <span class="avatar avatar-lg">{{ profile.public_name|first|upper }}</span>
+    {% endif %}
+    <div>
+      <h1 class="mb-1">{{ profile.public_name }}</h1>
+      {% if profile.availability %}
+        <span class="badge-soft"><i class="bi bi-clock"></i> {{ profile.availability }}</span>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="form-card" style="max-width:none">
+  <h5>О себе</h5>
+  <p>{{ profile.bio|default:"Пока ничего не написано." }}</p>
+  {% if is_me %}
+    <a href="{% url 'profile_edit' %}" class="btn btn-dark">Редактировать профиль</a>
+  {% endif %}
+</div>
+{% endblock %}
