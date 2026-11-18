@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 
 from pathlib import Path
 
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -19,13 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-fx1y*d*2p2#3dm#&zsabz2!qe&@*qz4^-u)%3(%$i03)cl+gy@'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-only-key-change-me')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', '1') == '1'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'abdullahsiraziddin.pythonanywhere.com']
+
+CSRF_TRUSTED_ORIGINS = ['https://abdullahsiraziddin.pythonanywhere.com']
 
 
 # Application definition
@@ -145,3 +147,5 @@ COLLEGE_EMAIL_DOMAINS = []
 # Чтобы сообщения Django красиво выглядели в Bootstrap
 from django.contrib.messages import constants as message_constants
 MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
